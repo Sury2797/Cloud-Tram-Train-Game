@@ -1,0 +1,1 @@
+{"name":"cloud-tram-mango-tide","version":"2.0.0","private":true,"type":"module","scripts":{"start":"npx serve .","build":"node build.mjs"},"devDependencies":{"terser":"^5.31.0"}}

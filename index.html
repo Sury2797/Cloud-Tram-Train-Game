@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cloud Tram: Mango Tide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"></head><body>
+<canvas id="c"></canvas>
+<div class="ov" id="vig"></div><div class="ov" id="grain"></div><div class="ov" id="spd"></div><div class="ov" id="edge"></div>
+<div id="offline">Cloud Tram needs an internet connection once to load its 3D engine (Three.js). Please go online and reload.</div>
+<div id="hud">
+ <div id="tl"><div class="panel" id="dial"><svg viewBox="0 0 120 84"><path d="M20 72 A46 46 0 1 1 100 72" fill="none" stroke="#dcc08a" stroke-width="9" stroke-linecap="round" pathLength="100"/><path id="arc" d="M20 72 A46 46 0 1 1 100 72" fill="none" stroke="#1f9d94" stroke-width="9" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/><text x="60" y="58" text-anchor="middle" class="k" id="kmh">0</text><text x="60" y="72" text-anchor="middle" class="u">km/h</text></svg><span id="lim">limit 80</span></div>
+  <div class="chips"><span class="panel chip" id="pax">👥 0/16 aboard</span><span class="panel chip" id="wx">☀ Sunny</span><span class="panel chip" id="clk">🕕 06:00</span></div></div>
+ <div id="tr" class="panel"><div id="dest">To Mango Tide Island</div><div id="coins">🪙 0</div><div id="strk">Streak 0 · x1.0</div></div>
+ <div id="topbtn"><button class="rb" id="bCam" title="Camera (C)">🎥</button><button class="rb" id="bMute" title="Mute (M)">🔊</button><button class="rb" id="bHelp" title="Help (H)">?</button><button class="rb" id="bPause" title="Pause (P)">⏸</button></div>
+ <div id="cue"></div><div class="panel" id="warn"></div>
+ <div class="panel" id="wind">Crosswind<span id="windA">➤</span></div>
+ <div id="sub"></div><div id="toast"></div><div id="bub"></div>
+ <div class="panel" id="bc"><svg viewBox="0 0 520 54"><path id="route" d="M24 36 C90 6 150 54 220 30 S340 6 400 32 S480 46 496 20" fill="none" stroke="#dcc08a" stroke-width="10" stroke-linecap="round"/><path id="routeF" d="M24 36 C90 6 150 54 220 30 S340 6 400 32 S480 46 496 20" fill="none" stroke="#3a9d5d" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/><g id="cps"></g><text id="ico" font-size="22" text-anchor="middle">🚋</text></svg>
+  <div id="cmf"><span id="sA">Spring Terminus</span><span id="cmfv">Comfort 100 🙂</span><span id="sB">Mango Tide</span></div></div>
+ <div class="ctl" id="cl"><button class="btn big brake" id="tBrake">Brake<small>Space</small></button></div>
+ <div class="ctl" id="cr"><button class="btn sm" id="tL">◀</button><button class="btn sm" id="tR">▶</button><button class="btn big go" id="tGo">Go<small>W</small></button></div>
+</div>
+<div class="scr on" id="title"><div class="card"><h1>Cloud Tram<br><span style="font-size:.5em;color:#1f9d94">Mango Tide</span></h1><p>A cozy ride between the clouds. Drive smooth, stop on the mark, earn tips.</p>
+ <button class="btn" id="bStart" style="font-size:22px;padding:10px 30px;margin:8px 4px">▶ All aboard</button><button class="btn" id="bSet" style="margin:8px 4px">Settings</button><button class="btn" id="bHow" style="margin:8px 4px">How to play</button>
+ <p style="font-size:12px;opacity:.7">Best tips in one trip: <b id="best">0</b></p></div></div>
+<div class="scr" id="set"><div class="card"><h2>Settings</h2>
+ <div class="row">Master<input type="range" id="sVol" min="0" max="1" step=".05"></div><div class="row">Music<input type="range" id="sMus" min="0" max="1" step=".05"></div><div class="row">Effects<input type="range" id="sSfx" min="0" max="1" step=".05"></div>
+ <div class="row">Quality<select id="sQ"><option value="-1">Auto</option><option value="0">Low</option><option value="1">Medium</option><option value="2">High</option></select></div>
+ <div class="row">Subtitles<input type="checkbox" id="sSub"></div><div class="row">Reduced motion<input type="checkbox" id="sRM"></div>
+ <button class="btn" id="bSetX" style="margin-top:8px">Done</button></div></div>
+<div class="scr" id="help"><div class="card"><h2>How to play</h2><p><b>Hold Space / mouse / Brake</b> to slow down. Release and the engine eases back up.</p><p><b>A/D or ◀ ▶</b> lean against crosswind gusts. <b>W</b> adds a speed boost.</p><p>Brake early and softly: stop on the yellow mark for big tips. Slams, hard turns and gusts drain comfort.</p><p><b>C</b> camera · <b>M</b> mute · <b>P</b> pause · <b>H</b> help</p><button class="btn" id="bHelpX">Got it</button></div></div>
+<div class="scr" id="pause"><div class="card"><h2>Paused</h2><button class="btn" id="bResume" style="margin:4px">Resume</button><button class="btn" id="bSet2" style="margin:4px">Settings</button></div></div>
+<div class="scr" id="sum"><div class="card"><h2 id="sumT">Trip summary</h2><p id="sumQ"></p><div class="stat"><div><b id="sTips">0</b>tips this stop</div><div><b id="sCom">0</b>avg comfort</div><div><b id="sPerf">0</b>perfect stops</div><div><b id="sStr">0</b>best streak</div></div><button class="btn" id="bCont" style="font-size:18px;padding:8px 22px">Continue</button></div></div>
+<div class="scr" id="shop"><div class="card"><h2>🔧 Oliver's Cloudworks</h2><p id="oli">"Welcome aboard! Spend your tips and I'll make her shine."</p><div id="coins2" style="font-weight:600;color:#a8650c"></div><div id="vine"><i></i></div><div id="vtxt">Sit back and watch it grow.</div><div id="ups"></div><button class="btn" id="bDep" style="font-size:18px;padding:8px 22px;margin-top:8px">Depart</button></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/main.js" defer></script></body></html>
